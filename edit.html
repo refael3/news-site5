@@ -13,12 +13,12 @@
 
         <label for="image">תמונה:</label>
         <input type="file" id="image" name="image" accept="image/*" required>
-        <img id="previewImage" alt="תצוגה מקדימה" style="display: none;">
+        <img id="previewImage" alt="תצוגה מקדימה" style="display: none; width: 200px; height: auto;">
 
         <label for="content">תוכן:</label>
         <textarea id="content" name="content" rows="10" required></textarea>
 
-        <button type="button" id="saveButton">הורד</button>
+        <button type="button" id="saveButton">שמור</button>
     </form>
 
     <script>
@@ -53,7 +53,7 @@
                 </head>
                 <body>
                     <article>
-                        <img src="${imgSrc}" alt="תמונה לכתבה">
+                        <img src="${imgSrc}" alt="תמונה לכתבה" style="max-width: 100%; height: auto;">
                         <h2>${title}</h2>
                         <p>${content}</p>
                     </article>
@@ -80,8 +80,8 @@
                 </head>
                 <body>
                     <h1>דף הבית</h1>
-                    <div>
-                        <img src="${imgSrc}" alt="תמונה לכתבה">
+                    <div style="border: 1px solid #ccc; padding: 10px; margin: 10px;">
+                        <img src="${imgSrc}" alt="תמונה לכתבה" style="width: 100px; height: auto; display: block;">
                         <h2>${title}</h2>
                     </div>
                 </body>
