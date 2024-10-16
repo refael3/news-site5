@@ -9,18 +9,93 @@
 <body>
     <form id="articleForm">
         <label for="title">כותרת:</label>
-        <input type="text" id="title" required>
+        <input type="text" id="title" name="title" required>
 
         <label for="image">תמונה:</label>
-        <input type="file" id="image" accept="image/*" required>
+        <input type="file" id="image" name="image" accept="image/*" required>
         <img id="previewImage" alt="תצוגה מקדימה" style="display: none;">
 
         <label for="content">תוכן:</label>
-        <textarea id="content" rows="10" required></textarea>
+        <textarea id="content" name="content" rows="10" required></textarea>
 
-        <button type="submit">שמור</button>
+        <button type="button" id="saveButton">שמור</button>
     </form>
 
-    <script src="script.js"></script>
+    <script>
+        // הצגת תמונה להעלאה בתצוגה מקדימה
+        document.getElementById('image').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const imgPreview = document.getElementById('previewImage');
+                    imgPreview.src = e.target.result;
+                    imgPreview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // יצירת קובץ HTML של הכתבה והורדתו למחשב
+        document.getElementById('saveButton').addEventListener('click', function() {
+            const title = document.getElementById('title').value;
+            const content = document.getElementById('content').value;
+            const imgSrc = document.getElementById('previewImage').src;
+
+            // יצירת HTML של הכתבה החדשה
+            const articleHTML = `
+                <!DOCTYPE html>
+                <html lang="he">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>${title}</title>
+                </head>
+                <body>
+                    <article>
+                        <img src="${imgSrc}" alt="תמונה לכתבה">
+                        <h2>${title}</h2>
+                        <p>${content}</p>
+                    </article>
+                </body>
+                </html>
+            `;
+
+            // יצירת קובץ HTML של דף הכתבה
+            const articleBlob = new Blob([articleHTML], { type: 'text/html' });
+            const articleUrl = URL.createObjectURL(articleBlob);
+            const downloadLinkArticle = document.createElement('a');
+            downloadLinkArticle.href = articleUrl;
+            downloadLinkArticle.download = `article-${Date.now()}.html`;
+            downloadLinkArticle.click();
+
+            // יצירת קובץ HTML מעודכן של דף הבית עם הכותרת והתמונה
+            const indexHTML = `
+                <!DOCTYPE html>
+                <html lang="he">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>דף הבית</title>
+                </head>
+                <body>
+                    <h1>דף הבית</h1>
+                    <div>
+                        <img src="${imgSrc}" alt="תמונה לכתבה">
+                        <h2>${title}</h2>
+                    </div>
+                </body>
+                </html>
+            `;
+
+            // יצירת קובץ HTML מעודכן של דף הבית
+            const indexBlob = new Blob([indexHTML], { type: 'text/html' });
+            const indexUrl = URL.createObjectURL(indexBlob);
+            const downloadLinkIndex = document.createElement('a');
+            downloadLinkIndex.href = indexUrl;
+            downloadLinkIndex.download = `index.html`;
+            downloadLinkIndex.click();
+        });
+    </script>
 </body>
 </html>
