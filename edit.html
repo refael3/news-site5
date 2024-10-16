@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>עריכת כתבה</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <form id="articleForm">
+        <label for="title">כותרת:</label>
+        <input type="text" id="title" required>
+
+        <label for="image">תמונה:</label>
+        <input type="file" id="image" accept="image/*" required>
+        <img id="previewImage" alt="תצוגה מקדימה" style="display: none;">
+
+        <label for="content">תוכן:</label>
+        <textarea id="content" rows="10" required></textarea>
+
+        <button type="submit">שמור</button>
+    </form>
+
+    <script src="script.js"></script>
+</body>
+</html>
